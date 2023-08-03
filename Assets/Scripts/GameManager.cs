@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject enemy;
     public GameObject tower;
+    public SingleOrMulti singleOrMulti;
     public HealthBar healthbar;
     public float timeToSpawn = 5f;
     public Terrain terrain;
@@ -20,24 +21,44 @@ public class GameManager : MonoBehaviour
     float time = 0;
     float towerHealth = 100;
     TextMeshProUGUI text;
+    bool isFirstSpawn = true;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         text = GameObject.Find("Coin Text").GetComponent<TextMeshProUGUI>();
+        singleOrMulti = GameObject.Find("singleOrMulti").GetComponent<SingleOrMulti>();
+        if (singleOrMulti.multiplayer == false)
+        {
+            time = 5;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         time -= Time.deltaTime;
+        if (isFirstSpawn)
+        {
+            SpawnEnemyIfMultiplayer();
+            time = timeToSpawn;
+        }
         if (time < 0)
         {
             SpawnEnemy();
             time = timeToSpawn;
         }
         text.text = "Coins: " + coins;
+    }
+    void SpawnEnemyIfMultiplayer()
+    {
+        // If the game is meant to be multiplayer and there are two people connected
+        if (singleOrMulti.multiplayer = true && PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        {
+            SpawnEnemy();
+            isFirstSpawn = false;
+        }
     }
     public void SpawnEnemy()
     {
