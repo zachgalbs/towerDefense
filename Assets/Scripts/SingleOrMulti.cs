@@ -6,16 +6,16 @@ using Photon.Pun;
 
 public class SingleOrMulti : MonoBehaviour
 {
-    public bool multiplayer = true;
-
     public void SingleplayerNav()
     {
         PhotonNetwork.LoadLevel("Loading");
-        multiplayer = false;
+        PlayerPrefs.SetInt("IsMultiplayer", 0);
+        PlayerPrefs.Save();
     }
     public void MultiplayerNav()
     {
         PhotonNetwork.LoadLevel("Loading");
-        multiplayer = true;
+        PlayerPrefs.SetInt("IsMultiplayer", 1);
+        PlayerPrefs.Save();
     }
 }

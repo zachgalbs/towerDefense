@@ -22,16 +22,19 @@ public class GameManager : MonoBehaviour
     float towerHealth = 100;
     TextMeshProUGUI text;
     bool isFirstSpawn = true;
+    bool multiplayer;
     // Start is called before the first frame update
     void Start()
     {
+        multiplayer = PlayerPrefs.GetInt("IsMultiplayer") == 1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         text = GameObject.Find("Coin Text").GetComponent<TextMeshProUGUI>();
-        singleOrMulti = GameObject.Find("singleOrMulti").GetComponent<SingleOrMulti>();
-        if (singleOrMulti.multiplayer == false)
+        if (!multiplayer)
         {
+            Debug.Log(isFirstSpawn);
             time = 5;
+            isFirstSpawn = false;
         }
     }
 
@@ -44,7 +47,7 @@ public class GameManager : MonoBehaviour
             SpawnEnemyIfMultiplayer();
             time = timeToSpawn;
         }
-        if (time < 0)
+        else if (time < 0)
         {
             SpawnEnemy();
             time = timeToSpawn;
@@ -54,7 +57,7 @@ public class GameManager : MonoBehaviour
     void SpawnEnemyIfMultiplayer()
     {
         // If the game is meant to be multiplayer and there are two people connected
-        if (singleOrMulti.multiplayer = true && PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        if (multiplayer && PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
             SpawnEnemy();
             isFirstSpawn = false;
