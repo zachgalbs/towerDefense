@@ -7,7 +7,8 @@ using Photon.Pun;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject enemy;
+    public GameObject towerEnemy;
+    public GameObject playerEnemy;
     public GameObject tower;
     public SingleOrMulti singleOrMulti;
     public HealthBar healthbar;
@@ -69,12 +70,15 @@ public class GameManager : MonoBehaviour
         Vector3 terrainPos = terrain.transform.position;
         Bounds planeBounds = new Bounds(terrainPos + terrainSize / 2, terrainSize);
         Vector3 randomPos = new Vector3(Random.Range(planeBounds.min.x, planeBounds.max.x), 0, Random.Range(planeBounds.min.z, planeBounds.max.z));
-
+        Vector3 randomPos2 = new Vector3(Random.Range(planeBounds.min.x, planeBounds.max.x), 0, Random.Range(planeBounds.min.z, planeBounds.max.z));
         if (PhotonNetwork.IsMasterClient)
         {
-            GameObject newEnemy = PhotonNetwork.Instantiate(enemy.name, randomPos, Quaternion.identity);
+            GameObject newEnemy = PhotonNetwork.Instantiate(towerEnemy.name, randomPos, Quaternion.identity);
+            GameObject newEnemy2 = PhotonNetwork.Instantiate(playerEnemy.name, randomPos2, Quaternion.identity);
             newEnemy.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.MasterClient);
-            enemy.GetComponent<EnemyBehavior>().eHealth = 100;
+            newEnemy2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.MasterClient);
+            //towerEnemy.GetComponent<EnemyBehavior>().eHealth = 100;
+            //playerEnemy.GetComponent<EnemyBehavior>().eHealth = 100;
         }
     }
     public void TShot(float eDamage)

@@ -33,9 +33,13 @@ public class RaycastShoot : MonoBehaviour
             {
                 lazerLine.SetPosition(1, hit.point);
                 Debug.Log("hit " + hit.collider.gameObject.name);
-                if (hit.collider.gameObject.CompareTag("Enemy"))
+                if (hit.collider.gameObject.CompareTag("Slime"))
                 {
-                    hit.collider.gameObject.GetComponent<EnemyBehavior>().EShot(gunDamage);
+                    hit.collider.gameObject.GetComponent<SlimeBehavior>().EShot(gunDamage);
+                }
+                if (hit.collider.gameObject.CompareTag("Turtle"))
+                {
+                    hit.collider.gameObject.GetComponent<TurtleBehavior>().EShot(gunDamage);
                 }
             }
             else

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 
-public class EnemyBehavior : MonoBehaviour
+public class SlimeBehavior : MonoBehaviour
 {
     public float enemyDistance;
     public int eHealth = 100;
@@ -12,32 +12,54 @@ public class EnemyBehavior : MonoBehaviour
     public GameObject coin;
     public GameObject enemy;
     GameManager gameManager;
-    Vector3 tower;
     NavMeshAgent agent;
-
+    Animator animator;
+    GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        tower = GameObject.FindWithTag("Tower").transform.position;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        tower = new Vector3(tower.x, transform.position.y, tower.z);
         agent = GetComponent<NavMeshAgent>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (tower != null)
+        animator = GetComponent<Animator>();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Debug.Log(players.Length);
+        foreach (GameObject p in players)
         {
-            transform.LookAt(tower);
-            // starts following the player
-            agent.SetDestination(tower);
-
-            if (Vector3.Distance(transform.position, tower) < enemyDistance)
+            Debug.Log(p.name);
+            if (p.scene.isLoaded && p.activeInHierarchy) // Check if the object is part of a loaded scene and is active
             {
-                gameManager.TShot(eDamage);
-                GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+                if (player == null)
+                {
+                    Debug.Log(p);
+                    player = p;
+                }
+                else
+                {
+                    Vector3 d1 = player.transform.position - transform.position;
+                    Vector3 d2 = p.transform.position - transform.position;
+                    if (d1.magnitude > d2.magnitude)
+                    {
+                        player = p;
+                    }
+                }
+            }
+        }
+    }
+        // Update is called once per frame
+        void Update()
+    {
+        Debug.Log("Found player: " + player.name + " at " + player.transform.position);
+        if (player != null)
+        {
+            transform.LookAt(player.transform);
+            // starts following the player
+            agent.SetDestination(player.transform.position);
 
+            if (Vector3.Distance(transform.position, player.transform.position) < enemyDistance)
+            {
+                animator.SetTrigger("nearPlayer");
+                player.GetComponent<PlayerBehavior>().PShot(eDamage);
+                GetComponent<NavMeshAgent>().velocity = Vector3.zero;
             }
         }
     }

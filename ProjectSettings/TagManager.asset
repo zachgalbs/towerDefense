@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Coin
-  - Enemy
   - Tower
+  - Slime
+  - Turtle
   layers:
   - Default
   - TransparentFX

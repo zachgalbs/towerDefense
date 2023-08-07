@@ -465,8 +465,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1c40f58241e411980c430c9c206a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1931298151966786, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+  towerEnemy: {fileID: 1524411113276028, guid: e2aafa8770d34a9591b41bedf4e318ba, type: 3}
+  playerEnemy: {fileID: 1931298151966786, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
   tower: {fileID: 1098229890}
+  singleOrMulti: {fileID: 0}
   healthbar: {fileID: 848715157}
   timeToSpawn: 20
   terrain: {fileID: 1809267776}

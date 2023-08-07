@@ -394,7 +394,7 @@ MonoBehaviour:
   gravity: 30
   lookSpeed: 3
   jumpPower: 10
-  pHealth: 100
+  pHealth: 52.179962
   playerCamera: {fileID: 9045456899841363787}
 --- !u!136 &7293811825615348742
 CapsuleCollider:

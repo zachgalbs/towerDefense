@@ -248,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joinButton: {fileID: 2073009637}
   joinInput: {fileID: 833506493}
-  title: {fileID: 1877465354}
+  title: {fileID: 1877465356}
 --- !u!4 &303967833
 Transform:
   m_ObjectHideFlags: 0
