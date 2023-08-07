@@ -51,15 +51,23 @@ public class SlimeBehavior : MonoBehaviour
         Debug.Log("Found player: " + player.name + " at " + player.transform.position);
         if (player != null)
         {
-            transform.LookAt(player.transform);
+            Vector3 direction = player.transform.position - transform.position;
+            direction.y = 0; // Ignore differences in height
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Euler(-10, rotation.eulerAngles.y, 0);
+
             // starts following the player
             agent.SetDestination(player.transform.position);
 
             if (Vector3.Distance(transform.position, player.transform.position) < enemyDistance)
             {
-                animator.SetTrigger("nearPlayer");
+                animator.SetBool("nearPlayer", true);
                 player.GetComponent<PlayerBehavior>().PShot(eDamage);
                 GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+            }
+            else
+            {
+                animator.SetBool("nearPlayer", false);
             }
         }
     }
