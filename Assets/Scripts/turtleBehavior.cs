@@ -28,8 +28,10 @@ public class TurtleBehavior : MonoBehaviour
     {
         if (tower != null)
         {
-            transform.LookAt(tower);
-            // starts following the player
+            Vector3 direction = tower.transform.position - transform.position;
+            direction.y = 0; // Ignore differences in height
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Euler(-10, rotation.eulerAngles.y, 0);
             agent.SetDestination(tower.position);
 
             if (Vector3.Distance(transform.position, tower.position) < enemyDistance)
@@ -43,14 +45,13 @@ public class TurtleBehavior : MonoBehaviour
     public void EShot(int gunDamage)
     {
         eHealth -= gunDamage;
-        Debug.Log(eHealth);
         if (eHealth <= 0)
         {
             Instantiate(coin, transform.position, Quaternion.identity);
             gameManager.enemyKillCount++;
             if (gameManager.enemyKillCount >= gameManager.maxEnemyKillCount)
             {
-                gameManager.EndGame();
+                gameManager.NextWave();
             }
             Destroy(gameObject);
             Die();

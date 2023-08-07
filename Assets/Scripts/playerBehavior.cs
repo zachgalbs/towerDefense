@@ -81,7 +81,6 @@ public class PlayerBehavior : MonoBehaviour
     public void PShot(float gunDamage)
     {
         pHealth -= gunDamage * Time.deltaTime;
-        Debug.Log(pHealth);
         if (pHealth <= 0)
         {
             gm.EndGame();

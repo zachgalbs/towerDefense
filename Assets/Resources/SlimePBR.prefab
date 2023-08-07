@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 774dce2a626c344b3994ac78e7673fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyDistance: 1.8
+  enemyDistance: 1.9
   eHealth: 100
   eDamage: 1
   coin: {fileID: 3999755887602311478, guid: 67f899df11fb140c0af1fefcba6410d9, type: 3}

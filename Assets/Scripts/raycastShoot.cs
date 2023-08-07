@@ -11,6 +11,7 @@ public class RaycastShoot : MonoBehaviour
     public Transform gunEnd;
     public Camera cam;
     LineRenderer lazerLine;
+    Vector3 camOffset;
     float nextFire = 0f;
     // Start is called before the first frame update
     void Start()
@@ -32,7 +33,6 @@ public class RaycastShoot : MonoBehaviour
             if (Physics.Raycast(rayOrigin, cam.transform.forward, out RaycastHit hit, weaponRange))
             {
                 lazerLine.SetPosition(1, hit.point);
-                Debug.Log("hit " + hit.collider.gameObject.name);
                 if (hit.collider.gameObject.CompareTag("Slime"))
                 {
                     hit.collider.gameObject.GetComponent<SlimeBehavior>().EShot(gunDamage);
@@ -49,17 +49,12 @@ public class RaycastShoot : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire2"))
         {
-            cam.transform.position += cam.transform.forward * 3;
-            cam.transform.position += cam.transform.right;
-            cam.transform.position -= cam.transform.up;
+            camOffset = Vector3.forward * 3 + Vector3.right * 0.8f - Vector3.up;
+            cam.transform.localPosition += camOffset;
         }
         if (Input.GetButtonUp("Fire2"))
         {
-            Debug.Log(cam.transform.forward);
-            Debug.Log(cam.transform.position);
-            cam.transform.position -= cam.transform.forward * 3;
-            cam.transform.position -= cam.transform.right;
-            cam.transform.position += cam.transform.up;
+            cam.transform.localPosition -= camOffset;
         }
 
     }

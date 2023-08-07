@@ -19,11 +19,13 @@ public class GameManager : MonoBehaviour
     public int maxEnemyKillCount = 10;
     [HideInInspector]
     public int enemyKillCount = 0;
+    public int waveCount;
     float time = 0;
     float towerHealth = 100;
     TextMeshProUGUI text;
     bool isFirstSpawn = true;
     bool multiplayer;
+    public TextMeshProUGUI waveText;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,6 @@ public class GameManager : MonoBehaviour
         text = GameObject.Find("Coin Text").GetComponent<TextMeshProUGUI>();
         if (!multiplayer)
         {
-            Debug.Log(isFirstSpawn);
             time = 5;
             isFirstSpawn = false;
         }
@@ -77,8 +78,6 @@ public class GameManager : MonoBehaviour
             GameObject newEnemy2 = PhotonNetwork.Instantiate(playerEnemy.name, randomPos2, Quaternion.identity);
             newEnemy.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.MasterClient);
             newEnemy2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.MasterClient);
-            //towerEnemy.GetComponent<EnemyBehavior>().eHealth = 100;
-            //playerEnemy.GetComponent<EnemyBehavior>().eHealth = 100;
         }
     }
     public void TShot(float eDamage)
@@ -97,10 +96,27 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
         SceneManager.LoadScene(3);
     }
+    public void NextWave()
+    {
+        waveCount++;
+        Debug.Log("Waves: " + waveCount);
+        maxEnemyKillCount = waveCount * 3 + 10;
+        enemyKillCount = 0;
+        timeToSpawn /= 1.5f;
+        timeToSpawn++;
+        StartCoroutine(ShowText());
+    }
     [PunRPC]
     public void DestroyEnemy(string enemyID)
     {
         // This will destroy the enemy for all clients.
         PhotonNetwork.Destroy(PhotonView.Find(int.Parse(enemyID)).gameObject);
+    }
+    IEnumerator ShowText()
+    {
+        waveText.text = "Wave: " + waveCount;
+        waveText.enabled = true;
+        yield return new WaitForSeconds(1f);
+        waveText.enabled = false;
     }
 }

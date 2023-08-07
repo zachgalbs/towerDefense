@@ -22,15 +22,12 @@ public class SlimeBehavior : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log(players.Length);
         foreach (GameObject p in players)
         {
-            Debug.Log(p.name);
             if (p.scene.isLoaded && p.activeInHierarchy) // Check if the object is part of a loaded scene and is active
             {
                 if (player == null)
                 {
-                    Debug.Log(p);
                     player = p;
                 }
                 else
@@ -48,7 +45,6 @@ public class SlimeBehavior : MonoBehaviour
         // Update is called once per frame
         void Update()
     {
-        Debug.Log("Found player: " + player.name + " at " + player.transform.position);
         if (player != null)
         {
             Vector3 direction = player.transform.position - transform.position;
@@ -74,14 +70,13 @@ public class SlimeBehavior : MonoBehaviour
     public void EShot(int gunDamage)
     {
         eHealth -= gunDamage;
-        Debug.Log(eHealth);
         if (eHealth <= 0)
         {
             Instantiate(coin, transform.position, Quaternion.identity);
             gameManager.enemyKillCount++;
             if (gameManager.enemyKillCount >= gameManager.maxEnemyKillCount)
             {
-                gameManager.EndGame();
+                gameManager.NextWave();
             }
             Destroy(gameObject);
             Die();
