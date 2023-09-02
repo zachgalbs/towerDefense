@@ -10,7 +10,9 @@ public class PlayerBehavior : MonoBehaviour
     public float gravity = 9.8f;
     public float lookSpeed = 2f;
     public float jumpPower = 10f;
-    public float pHealth = 100;
+    public float pHealth;
+    public PlayerHealthBarBehavior playerHealthBar;
+    public float maxPHealth = 100;
     public Camera playerCamera;
     bool doubleJump = false;
     int jumpsLeft = 0;
@@ -27,6 +29,8 @@ public class PlayerBehavior : MonoBehaviour
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         audioSources = GetComponents<AudioSource>();
         view = GetComponent<PhotonView>();
+        playerHealthBar = GameObject.Find("playerHealth").GetComponent<PlayerHealthBarBehavior>();
+        playerHealthBar.SetMaxHealth(maxPHealth);
     }
 
     // Update is called once per frame
@@ -61,7 +65,9 @@ public class PlayerBehavior : MonoBehaviour
             rotationX = Mathf.Clamp(rotationX, -90f, 90f);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+            playerHealthBar.SetHealth(pHealth);
         }
+
     }
     void OnTriggerEnter(Collider collision)
     {
@@ -81,6 +87,7 @@ public class PlayerBehavior : MonoBehaviour
     public void PShot(float gunDamage)
     {
         pHealth -= gunDamage * Time.deltaTime;
+        Debug.Log(pHealth);
         if (pHealth <= 0)
         {
             gm.EndGame();

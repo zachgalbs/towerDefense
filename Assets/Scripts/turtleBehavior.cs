@@ -59,9 +59,12 @@ public class TurtleBehavior : MonoBehaviour
     }
     public void Die() // Call this function when the enemy is supposed to die.
     {
-        // This will call the DestroyEnemy RPC on the GameManager on all clients.
-        PhotonView gameManagerPhotonView = GameObject.Find("GameManager").GetComponent<PhotonView>();
-        gameManagerPhotonView.RPC("DestroyEnemy", RpcTarget.All, GetComponent<PhotonView>().ViewID.ToString());
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // This will call the DestroyEnemy RPC on the GameManager on all clients.
+            PhotonView gameManagerPhotonView = GameObject.Find("GameManager").GetComponent<PhotonView>();
+            gameManagerPhotonView.RPC("DestroyEnemy", RpcTarget.All, GetComponent<PhotonView>().ViewID.ToString());
+        }
     }
 
 }

@@ -762,7 +762,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d84e55508c324f1a81c8b60822b5b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplayer: 1
 --- !u!4 &1036932015
 Transform:
   m_ObjectHideFlags: 0

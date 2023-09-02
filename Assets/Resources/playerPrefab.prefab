@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2877116870948082026}
   m_Layer: 0
   m_Name: Gun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,8 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunDamage: 40
-  fireRate: 0.25
-  weaponRange: 50
+  fireRate: 0.1
+  weaponRange: 200
   hitForce: 100
   gunEnd: {fileID: 7466657589297195470}
   cam: {fileID: 9045456899841363787}
@@ -149,7 +149,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 5b440cd44f3ab44f0a5d03eb3caf61df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -193,7 +193,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -218,7 +218,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -394,7 +394,9 @@ MonoBehaviour:
   gravity: 30
   lookSpeed: 3
   jumpPower: 10
-  pHealth: 52.179962
+  pHealth: 100
+  playerHealthBar: {fileID: 0}
+  maxPHealth: 100
   playerCamera: {fileID: 9045456899841363787}
 --- !u!136 &7293811825615348742
 CapsuleCollider:

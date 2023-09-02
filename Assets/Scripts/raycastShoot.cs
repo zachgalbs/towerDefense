@@ -27,7 +27,7 @@ public class RaycastShoot : MonoBehaviour
         {
             lazerLine.enabled = true;
             nextFire = Time.time + fireRate;
-            StartCoroutine(shotEffect());
+            StartCoroutine(ShotEffect());
             Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(1, 1, 0));
             lazerLine.SetPosition(0, gunEnd.position);
             if (Physics.Raycast(rayOrigin, cam.transform.forward, out RaycastHit hit, weaponRange))
@@ -58,10 +58,10 @@ public class RaycastShoot : MonoBehaviour
         }
 
     }
-    private IEnumerator shotEffect()
+    private IEnumerator ShotEffect()
     {
         lazerLine.enabled = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.05f);
         lazerLine.enabled = false;
     }
 }

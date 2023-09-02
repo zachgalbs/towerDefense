@@ -8,6 +8,7 @@ TagManager:
   - Tower
   - Slime
   - Turtle
+  - Gun
   layers:
   - Default
   - TransparentFX
